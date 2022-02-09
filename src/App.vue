@@ -5,9 +5,10 @@
       <input @change="add" id="input-image" type="file" accept="image/jpeg, image/png">
       <label class="download" for="input-image"><img src="./assets/add_image.png" alt="add"></label>
     </div>
-    <ul class="images">
+    <p class="reverse" @click="reverse">перевернуть список</p>
+    <transition-group name="list" tag="ul" class="images">
       <Image @delete="deleteId" v-for="image in images" :key="image.id" :image="image"></Image>
-    </ul>
+    </transition-group>
     <button @click="download" class="add">Добавить</button>
   </div>
 </template>
@@ -61,6 +62,9 @@ export default {
         .catch(() => {
           this.status = true
         })
+    },
+    reverse () {
+      this.images.reverse()
     }
   }
 }
@@ -119,6 +123,20 @@ export default {
     }
   }
 }
+.reverse{
+  outline: none;
+  border: none;
+  color: #005b98;
+  font-weight: 400;
+  font-size: 18px;
+  text-align: center;
+  background: none;
+  cursor: pointer;
+  transition: all .2s;
+  &:hover{
+    transform: scale(1.1);
+  }
+}
 
 .images {
   list-style-type: none;
@@ -148,5 +166,8 @@ export default {
   &:hover {
     box-shadow: 0 0 20px #005b98;
   }
+}
+.list-move{
+  transition: transform 0.8s ease;
 }
 </style>
